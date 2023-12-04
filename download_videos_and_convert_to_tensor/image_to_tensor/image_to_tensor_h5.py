@@ -12,8 +12,10 @@ def images_to_hdf5(input_directory, output_file):
     with h5py.File(output_file, 'w') as hf:
         for image_file in image_files:
             image_path = os.path.join(input_directory, image_file)
-            image = cv2.imread(image_path)
-            hf.create_dataset(image_file, data=image)
+            with open(image_path, 'rb') as img_f:
+                binary_data = img_f.read()
+            binary_data_np = np.asarray(binary_data)
+            hf.create_dataset(image_file, data=binary_data_np)
 
 
 def load_images_from_hdf5(input_hdf5_file):
