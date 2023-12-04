@@ -27,6 +27,6 @@ def scrape_links(url):
     return links
 
 # Example usage:
-url_to_scrape = 'https://data.bris.ac.uk/data/dataset/0d8372d37ec74e2f7c14746f582fddcd'
+url_to_scrape = 'https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m'
 scraped_links = scrape_links(url_to_scrape)
 print(scraped_links)

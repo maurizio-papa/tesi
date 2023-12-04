@@ -6,8 +6,8 @@ import av
 import numpy as np
 import torch
 
-from download_videos_and_convert_to_tensor.split_videos.split_videos_in_jpg import split_video_to_jpg
-from download_videos_and_convert_to_tensor.image_to_tensor.image_to_tensor_h5 import images_to_hdf5
+from split_videos.split_videos_in_jpg import split_video_to_jpg
+from image_to_tensor.image_to_tensor_h5 import images_to_hdf5
 
 
 def convert_videos_to_jpg(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR):
