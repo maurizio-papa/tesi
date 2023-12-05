@@ -1,7 +1,7 @@
 import os 
 import subprocess
 
-def split_video_to_jpg(input_video, output_directory, fps=50):
+def split_video_to_jpg(input_video, output_directory, fps= 30):
     '''
     Split a video into JPEG frames and write them to disk.
     Args:
@@ -13,6 +13,6 @@ def split_video_to_jpg(input_video, output_directory, fps=50):
         os.makedirs(output_directory)
 
     output_pattern = os.path.join(output_directory, 'frame_%04d.jpg')
-    command = f"C:/ffmpeg/bin/ffmpeg -i {input_video} -vf fps={fps} {output_pattern}"
+    command = f"ffmpeg -i {input_video} -vf fps={fps} {output_pattern}"
 
     subprocess.run(command, shell=True)

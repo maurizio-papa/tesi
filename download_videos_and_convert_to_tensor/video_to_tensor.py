@@ -24,8 +24,13 @@ def convert_videos_to_jpg(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR):
         
         participant_video_dir = os.path.join(EPIC_KITCHENS_VIDEO_DIR, participant_dir)
 
-        for idx, video in enumerate(os.listdir(participant_video_dir)):
-            split_video_to_jpg(os.path.join(participant_video_dir, video), participant_image_dir)
+        for _idx, video in enumerate(os.listdir(participant_video_dir)):
+
+            video_image_dir = os.path.join(participant_image_dir, f'{participant_dir}_{_idx}')
+            if not os.path.exists(video_image_dir):
+                os.makedirs(video_image_dir)
+
+            split_video_to_jpg(os.path.join(participant_video_dir, video), video_image_dir)
             print(f'finished converting in jpg video {idx} of participant {participant_dir}')
 
 
