@@ -1,8 +1,10 @@
 import requests
-from bs4 import BeautifulSoup
-import shutil
 import os 
 import re 
+import shutil
+
+from bs4 import BeautifulSoup
+
 
 
 EPIC_KITCHEN_TORRENT_URL = 'https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m'
