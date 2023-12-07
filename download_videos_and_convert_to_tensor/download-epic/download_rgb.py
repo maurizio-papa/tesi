@@ -4,23 +4,8 @@ import shutil
 import os 
 import re 
 
-def scrape_links(url):
-    """
-    generic function to scrape links from an url
-    """
-    links = []
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        for link in soup.find_all('a'):
-            href = link.get('href')
-            if href and href.startswith('http'):  
-                links.append(href)
-    except Exception as e:
-        print(f"An error occurred: {e}")
 
-    return links
-
+EPIC_KITCHEN_TORRENT_URL = 'https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m'
 
 
 def extract_rgb_frame_links(url):
@@ -66,19 +51,17 @@ def download_file(url, file_name):
                 #if chunk: 
                 f.write(chunk)
 
-def main(epic_kitchen_torrent_url):
-
-    if __name__ == '__main__':
-        rgb_frame_links = extract_rgb_frame_links(epic_kitchen_torrent_url)
-        for idx, participant_rgb_link  in enumerate(rgb_frame_links):
-
-            if not os.path.exists(f'./images/P{idx}'):
-                os.makedirs(f'./images/P{idx}')
+def main(EPIC_KITCHEN_TORRENT_URL):
+    
+    rgb_frame_links = extract_rgb_frame_links(EPIC_KITCHEN_TORRENT_URL)
+    for idx, participant_rgb_link  in enumerate(rgb_frame_links):
+        if not os.path.exists(f'./images/P{idx}'):
+            os.makedirs(f'./images/P{idx}')
         
-            participant_links = extract_links_for_each_participant(f'https://data.bris.ac.uk/data/dataset/{participant_rgb_link}')
-            for idx_2, link in enumerate(participant_links):
-                download_file(link, f'./images/P{idx}/{idx_2}.tar')
+        participant_links = extract_links_for_each_participant(f'https://data.bris.ac.uk/data/dataset/{participant_rgb_link}')
+        for idx_2, link in enumerate(participant_links):
+            download_file(link, f'./images/P{idx}/{idx_2}.tar')
 
 
-
-main('https://data.bris.ac.uk/data/dataset/2g1n6qdydwa9u22shpxqzp0t8m')
+if __name__ == '__main__':
+    main(EPIC_KITCHEN_TORRENT_URL)
