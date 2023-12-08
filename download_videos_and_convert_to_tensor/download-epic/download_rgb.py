@@ -48,9 +48,6 @@ def download_file(url, file_name):
     with requests.get(url, stream=True) as r:
         with open(file_name, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192): 
-                # If you have chunk encoded response uncomment if
-                # and set chunk_size parameter to None.
-                #if chunk: 
                 f.write(chunk)
 
 def main(EPIC_KITCHEN_TORRENT_URL):
