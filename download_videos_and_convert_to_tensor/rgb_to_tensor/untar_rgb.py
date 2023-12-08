@@ -1,5 +1,6 @@
-from download_videos_and_convert_to_tensor.image_to_tensor.image_to_tensor_h5 import load_images_from_hdf5, batch_images_to_hdf5
+import os 
 
+from image_to_tensor_h5 import load_images_from_hdf5, batch_images_to_hdf5
 import tarfile
 
 def extract_tar(tar_file, destination_folder):
@@ -25,3 +26,7 @@ def untar_directories(list_of_dirs):
 def main():
     untar_directories('./images')
     batch_images_to_hdf5('./images', 'hdf_img', batch_size=50, stride= 25)
+
+
+if __name__ == '__main__':
+    main()

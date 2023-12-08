@@ -1,0 +1,5 @@
+for each video of each participant: 
+    untar the folder containing the images 
+    convert frames to h5 group of 25 frames 
+    pass it to the model 
+    save the representation to the empty folder created 
