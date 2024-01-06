@@ -1,4 +1,6 @@
 pytorchvideo
-pytorch
+torch
 hydra-core
 torchvision
+requests
+bs4
