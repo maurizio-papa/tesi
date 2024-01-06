@@ -41,7 +41,6 @@ def batch_images_to_hdf5(input_directory, output_directory, output_prefix, batch
     Create separate HDF5 files for each batch.
     '''
     image_files = [f for f in os.listdir(input_directory) if f.endswith('.jpg')]
-    print(image_files)
     total_images = len(image_files)
     num_batches = (total_images - batch_size) // stride + 1
 
@@ -49,11 +48,11 @@ def batch_images_to_hdf5(input_directory, output_directory, output_prefix, batch
         batch_images = image_files[i * stride: i * stride + batch_size]
         print(batch_images)
 
-        output_file = f"{output_prefix}_batch_{i + 1}.h5"
+        output_file = f"{output_directory}/{output_prefix}_batch_{i + 1}.h5"
         with h5py.File(output_file, 'w') as hf:
             for j, image_file in enumerate(batch_images):
                 image_path = os.path.join(input_directory, image_file)
                 with open(image_path, 'rb') as img_f:
                     binary_data = img_f.read()
                 binary_data_np = np.asarray(binary_data)
-                hf.create_dataset(f'{output_directory}/image_{j + 1}', data=binary_data_np)
+                hf.create_dataset(f'image_{j + 1}', data=binary_data_np)

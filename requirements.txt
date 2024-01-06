@@ -1,0 +1,4 @@
+pytorchvideo
+pytorch
+hydra-core
+torchvision

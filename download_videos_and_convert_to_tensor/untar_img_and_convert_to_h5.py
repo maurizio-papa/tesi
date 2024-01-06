@@ -24,14 +24,18 @@ def untar_directories(img_dirs, destination_dir):
 
 
 def main():
-    #untar_directories('images', 'untared_images')
+    untar_directories('images', 'untared_images')
+
+    print('finished untaring directories')
+
     for dir in os.listdir('untared_images'):
         if not os.path.exists(f'tensor/{dir}'):
             os.makedirs(f'tensor/{dir}')
         for sub_dir in os.listdir(os.path.join('untared_images', dir)):
-            dst_output = f'tensor/{sub_dir}'
+            dst_output = f'tensor/{dir}/{sub_dir}'
             if not os.path.exists(dst_output):
                 os.makedirs(dst_output)
+            print(f'processing following dir: {dir}')
             batch_images_to_hdf5(f'untared_images/{dir}/{sub_dir}',dst_output, 'hdf_img', batch_size=50, stride= 25)
 
 
