@@ -4,3 +4,4 @@ hydra-core
 torchvision
 requests
 bs4
+shutils
