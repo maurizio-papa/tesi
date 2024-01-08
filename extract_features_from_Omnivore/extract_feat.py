@@ -68,8 +68,7 @@ transform=T.Compose(
         ]
     )
 
-
-def main():
+def main():     
     if not os.path.exists(FEATURE_DIR):
         os.makedirs(FEATURE_DIR)
 
@@ -77,11 +76,11 @@ def main():
 
     for participant in os.listdir(IMAGE_TENSOR_DIR):
         for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
-            for clip_batch in os.listdir(video):
-                clip_batch = load_images_from_hdf5(clip_batch)
-                clip_batch = transform(clip_batch)
-                video_input = reshape_video_input(clip_batch)
-                with torch.no_grad():
-                    features = model(video_input.to(DEVICE), input_type="video")
-                    write_pickle(data = features, file_name = '{participant}_{video}_{clip_batch}.pkl')
-
+            with h5py.File(f'{video}.h5', 'w') as file:
+                for clip_batch in os.listdir(video):
+                    clip_batch = load_images_from_hdf5(clip_batch)
+                    clip_batch = transform(clip_batch)
+                    video_input = reshape_video_input(clip_batch)
+                    file.create_dataset(f"tensor_{i}", data= video_input)
+                       # features = model(video_input.to(DEVICE), input_type="video")
+    
