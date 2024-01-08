@@ -31,10 +31,10 @@ def main():
     untar_directories(source, destination)
     for directory in os.listdir(destination):
         for dir in os.listdir(f'{destination}/{directory}'):
-            if not os.path.exists(f'mnt/storage/tensor/{dir}'):
-                os.makedirs(f'mnt/storage/tensor/{dir}')
-            batch_images_to_hdf5(f'mnt/storage/tensor/{dir}', 
-                                 f'mnt/storage/tensor/{dir}', 'hdf_img', batch_size=50, stride= 25)
+            if not os.path.exists(f'mnt/storage/tensor/{directory}/{dir}'):
+                os.makedirs(f'mnt/storage/tensor/{directory}/{dir}')
+            batch_images_to_hdf5(f'mnt/storage/tensor/{directory}/{dir}', 
+                                 f'mnt/storage/tensor/{directory}/{dir}', 'hdf_img', batch_size=50, stride= 25)
 
 
 if __name__ == '__main__':
