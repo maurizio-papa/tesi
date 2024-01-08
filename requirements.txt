@@ -5,3 +5,4 @@ torchvision
 requests
 bs4
 shutils
+h5py
