@@ -52,7 +52,7 @@ def main():
     for participant in os.listdir(IMAGE_TENSOR_DIR):
         for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
             with h5py.File(f'{video}.h5', 'w') as file:
-                for clip_batch in os.listdir(video):
+                for clip_batch in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}/{video}'):
                     clip_batch = load_images_from_hdf5(clip_batch)
                     clip_batch = transform(clip_batch)
                     video_input = reshape_video_input(clip_batch)
