@@ -17,20 +17,31 @@ from torchvision.transforms._transforms_video import NormalizeVideo
 from download_videos_and_convert_to_tensor.rgb_to_tensor.image_to_tensor_h5 import load_images_from_hdf5
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
 IMAGE_TENSOR_DIR = 'tensor'
+FEATURE_DIR = 'features_omnivore'
 
-def load_model():
-    model_name = "omnivore_swinB"
-    model = torch.hub.load("facebookresearch/omnivore:main", model=model_name, force_reload=True)
+class Identity(torch.nn.Module):
+    """
+    Identity class to substitue the last layer of the model
+    """
+    def __init__(self):
+        super(Identity, self).__init__()
+
+    def forward(self, x):
+        return x
+
+def load_model(model_name = "omnivore_swinB"):
+    model = torch.hub.load("facebookresearch/omnivore:main", model= model_name, force_reload=True)
     model = model.to(DEVICE)
     model = model.eval()
     return model 
 
-def remove_last_layer_from_model():
+def load_model_without_head():
     """
-    """
-    print('needs to be implemented')
+    """ 
+    model = load_model()
+    model.heads = Identity()
+    return model 
 
 
 def reshape_video_input(video_input):
@@ -39,6 +50,11 @@ def reshape_video_input(video_input):
     so we'll need to add another dim
     """
     return video_input[None, ...] 
+
+
+def write_pickle(data, file_name):
+    with open(file_name, "wb") as f:
+        pickle.dump(data, f)
 
 
 transform=T.Compose(
@@ -53,17 +69,19 @@ transform=T.Compose(
     )
 
 
-
 def main():
-    model = load_model()
-    remove_last_layer_from_model()
-    for participant_folder in os.listdir(IMAGE_TENSOR_DIR):
-        for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant_folder}'):
+    if not os.path.exists(FEATURE_DIR):
+        os.makedirs(FEATURE_DIR)
+
+    model = load_model_without_head()
+
+    for participant in os.listdir(IMAGE_TENSOR_DIR):
+        for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
             for clip_batch in os.listdir(video):
                 clip_batch = load_images_from_hdf5(clip_batch)
                 clip_batch = transform(clip_batch)
                 video_input = reshape_video_input(clip_batch)
                 with torch.no_grad():
                     features = model(video_input.to(DEVICE), input_type="video")
-    
+                    write_pickle(data = features, file_name = '{participant}_{video}_{clip_batch}.pkl')
 

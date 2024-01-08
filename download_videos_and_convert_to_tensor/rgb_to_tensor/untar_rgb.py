@@ -34,7 +34,7 @@ def main():
         for dir in os.listdir(f'{destination}/{directory}'):
             if not os.path.exists(f'tensor/{directory}/{dir}'):
                 os.makedirs(f'tensor/{directory}/{dir}')
-            batch_images_to_hdf5(f'tensor/{directory}/{dir}', 
+            batch_images_to_hdf5(f'{destination}/{directory}/{dir}', 
                                  f'tensor/{directory}/{dir}', 'hdf_img', batch_size=50, stride= 25)
 
 
