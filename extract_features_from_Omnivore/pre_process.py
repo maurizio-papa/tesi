@@ -1,4 +1,5 @@
 import os 
+import numpy as np
 
 import torch
 from omnivore.transforms import SpatialCrop, TemporalCrop
@@ -8,6 +9,7 @@ from pytorchvideo.transforms import (
     UniformTemporalSubsample,
 )
 
+import h5py
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as T
@@ -26,7 +28,7 @@ def reshape_video_input(video_input):
     The model expects inputs of shape: B x C x T x H x W
     so we'll need to add another dim
     """
-    return video_input[None, ...] 
+    return video_input[0][None, ...] 
 
 
 def write_pickle(data, file_name):
@@ -51,10 +53,16 @@ def main():
 
     for participant in os.listdir(IMAGE_TENSOR_DIR):
         for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
-            with h5py.File(f'{video}.h5', 'w') as file:
+            with h5py.File(f'{FEATURE_DIR}/{video}.h5', 'w') as file:
                 for clip_batch in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}/{video}'):
-                    clip_batch = load_images_from_hdf5(clip_batch)
+                    print(f'{clip_batch}')
+                    clip_batch = load_images_from_hdf5(f'{IMAGE_TENSOR_DIR}/{participant}/{video}/{clip_batch}')
+                    clip_batch = np.asarray([np.asarray(clip_batch[t]) for t in clip_batch])
+                    clip_batch = torch.from_numpy(clip_batch).permute([3, 0, 1, 2])
                     clip_batch = transform(clip_batch)
+                    clip_batch = np.stack(clip_batch, axis = 0)
                     video_input = reshape_video_input(clip_batch)
-                    file.create_dataset(f"tensor_{i}", data= video_input)
+                    file.create_dataset(f"tensor_{clip_batch}", data= video_input)
     
+if __name__ == '__main__':
+    main()
