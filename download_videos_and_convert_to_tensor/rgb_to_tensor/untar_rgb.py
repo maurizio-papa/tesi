@@ -3,7 +3,6 @@ from image_to_tensor_h5 import load_images_from_hdf5, batch_images_to_hdf5
 import tarfile
 import logging 
 
-logging.basicConfig(filename='untar_logs.log', level=logging.INFO, format= '{asctime} - {levelname} - {message}')
 
 def extract_tar(tar_file, destination_folder):
     try:
@@ -22,9 +21,8 @@ def untar_directories(source_folder, destination_folder):
                 os.makedirs(dst)
             try:
                 extract_tar(file_path, dst)
-                logging.info(f"Untarred: {file_path} to {dst}")
             except Exception as e:
-                logging.error(f"Failed to untar {file_path}. Error: {str(e)}")
+                print(f"Failed to untar {file_path}. Error: {str(e)}")
 
 
 def main():
