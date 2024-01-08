@@ -26,7 +26,7 @@ def untar_directories(source_folder, destination_folder):
 
 
 def main():
-    source = 'images'
+    source = '/mnt/storage/images'
     destination = '/mnt/storage/untared_images'
     untar_directories(source, destination)
     for directory in os.listdir(destination):
