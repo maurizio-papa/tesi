@@ -29,7 +29,7 @@ def untar_directories(source_folder, destination_folder):
 def main():
     source = 'images'
     destination = 'untared_images'
-    untar_directories(source, destination)
+    #untar_directories(source, destination)
     for directory in os.listdir(destination):
         for dir in os.listdir(f'{destination}/{directory}'):
             if not os.path.exists(f'tensor/{directory}/{dir}'):
