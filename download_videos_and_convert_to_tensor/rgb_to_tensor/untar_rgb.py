@@ -9,6 +9,7 @@ def extract_tar(tar_file, destination_folder):
         with tarfile.open(tar_file, 'r') as tar:
             tar.extractall(destination_folder)
         print(f"Extraction complete. Files extracted to: {destination_folder}")
+        os.remove(tar_file)
     except Exception as e:
         print(f"Error extracting the tar file: {e}")
 
@@ -26,15 +27,15 @@ def untar_directories(source_folder, destination_folder):
 
 
 def main():
-    source = '/mnt/storage/images'
-    destination = '/mnt/storage/untared_images'
+    source = 'images'
+    destination = 'untared_images'
     untar_directories(source, destination)
     for directory in os.listdir(destination):
         for dir in os.listdir(f'{destination}/{directory}'):
-            if not os.path.exists(f'mnt/storage/tensor/{directory}/{dir}'):
-                os.makedirs(f'mnt/storage/tensor/{directory}/{dir}')
-            batch_images_to_hdf5(f'mnt/storage/tensor/{directory}/{dir}', 
-                                 f'mnt/storage/tensor/{directory}/{dir}', 'hdf_img', batch_size=50, stride= 25)
+            if not os.path.exists(f'tensor/{directory}/{dir}'):
+                os.makedirs(f'tensor/{directory}/{dir}')
+            batch_images_to_hdf5(f'tensor/{directory}/{dir}', 
+                                 f'tensor/{directory}/{dir}', 'hdf_img', batch_size=50, stride= 25)
 
 
 if __name__ == '__main__':
