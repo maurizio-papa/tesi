@@ -26,15 +26,20 @@ def untar_directories(source_folder, destination_folder):
 
 
 def main():
-    untar_directories('images', 'untared_images')
-    for directory in os.listdir('untared_images'):
-        for dir in os.listdir(f'untared_images/{directory}'):
-            if not os.path.exists(f'tensor/{directory}/{dir}'):
-                os.makedirs(f'tensor/{directory}/{dir}')
-            batch_images_to_hdf5(f'untared_images/{directory}/{dir}', f'tensor/{directory}/{dir}', 'hdf_img', batch_size=50, stride= 25)
+    source = 'images'
+    destination = '/mnt/storage/untared_images'
+    untar_directories(source, destination)
+    for directory in os.listdir(destination):
+        for dir in os.listdir(f'{destination}/{directory}'):
+            if not os.path.exists(f'mnt/storage/tensor/{dir}'):
+                os.makedirs(f'mnt/storage/tensor/{dir}')
+            batch_images_to_hdf5(f'mnt/storage/tensor/{dir}', 
+                                 f'mnt/storage/tensor/{dir}', 'hdf_img', batch_size=50, stride= 25)
 
 
 if __name__ == '__main__':
     main()
+
+
 
 
