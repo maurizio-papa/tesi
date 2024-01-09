@@ -55,7 +55,7 @@ def main():
 
     for participant in os.listdir(IMAGE_TENSOR_DIR):
         if not os.path.exists(f'{FEATURE_DIR}/{participant}'):
-            os.makedirs(FEATURE_DIR)
+            os.makedirs(f'{FEATURE_DIR}/{participant}')
         for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
             with h5py.File(f'{FEATURE_DIR}/{participant}/{video}.h5', 'w') as file:
                 for clip_batch in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}/{video}'):
