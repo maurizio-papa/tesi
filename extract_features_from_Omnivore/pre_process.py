@@ -66,7 +66,7 @@ def main():
                     clip_batch = transform(clip_batch)
                     clip_batch = np.stack(clip_batch, axis = 0)
                     video_input = reshape_video_input(clip_batch)
-                    video_input = pickle.dumps(video_input)
+                    video_input = np.array(video_input)
                     file.create_dataset(f"tensor_{clip_batch}", data= video_input)
     
 if __name__ == '__main__':
