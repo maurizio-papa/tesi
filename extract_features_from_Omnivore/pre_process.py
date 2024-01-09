@@ -55,7 +55,7 @@ def main():
 
     for participant in os.listdir(IMAGE_TENSOR_DIR):
         for video in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}'):
-            with h5py.File(f'{FEATURE_DIR}/{video}.h5', 'w') as file:
+            with h5py.File(f'{FEATURE_DIR}/{participant}/{video}.h5', 'w') as file:
                 for clip_batch in os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}/{video}'):
                     print(f'{clip_batch}')
                     clip_batch = load_images_from_hdf5(f'{IMAGE_TENSOR_DIR}/{participant}/{video}/{clip_batch}')
