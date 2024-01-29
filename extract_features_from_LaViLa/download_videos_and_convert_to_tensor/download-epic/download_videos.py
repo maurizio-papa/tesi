@@ -56,7 +56,8 @@ def main(EPIC_KITCHEN_TORRENT_URL):
         
         participant_links = extract_links_for_each_participant(f'https://data.bris.ac.uk/data/dataset/{participant_rgb_link}')
         for idx_2, link in enumerate(participant_links):
-            download_file(link, f'./videos/P{idx}/{idx_2}.mp4')
+            if idx_2 > 1:                #it's a workaround
+                download_file(link, f'./videos/P{idx}/{idx_2}.mp4')
 
 
 if __name__ == '__main__':
