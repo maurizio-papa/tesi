@@ -8,4 +8,4 @@ def download_file(url, file_name):
             shutil.copyfileobj(r.raw, f)
 
 if __name__ == '__main__':
-    download_file('https://data.bris.ac.uk/datasets/tar/2g1n6qdydwa9u22shpxqzp0t8m.zip')
+    download_file('https://data.bris.ac.uk/datasets/tar/2g1n6qdydwa9u22shpxqzp0t8m.zip', 'epic.rar')
