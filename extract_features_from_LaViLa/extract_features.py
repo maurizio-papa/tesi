@@ -129,7 +129,7 @@ def main():
                     
                     clip_batch = load_images_from_hdf5(clip_batch)
                     clip_batch = ([to_tensor((clip_batch[t])) for t in clip_batch])
-                    clip_batch = torch.stack(batch).float()
+                    clip_batch = torch.stack(clip_batch).float()
                     clip_batch = transform(clip_batch).unsqueeze(0)
                     feature = model(clip_batch)
                     file.create_dataset(f'tensor_{i}', data= features)
