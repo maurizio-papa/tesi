@@ -39,7 +39,8 @@ from lavila.models import models
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 IMAGE_TENSOR_DIR = 'tensor'
 FEATURE_DIR = 'features_lavila'
-
+BASE_MODEL =  'clip_openai_timesformer_base.narrator_rephraser.ep_0005.md5sum_d73a9c.pth'
+FINETUNED_MODEL = 'clip_openai_timesformer_base.ft_ek100_cls.ep_0100.md5sum_4e3575.pth'
 
 transform = transforms.Compose([
     Permute([1, 0, 3, 2]),
@@ -51,7 +52,7 @@ transform = transforms.Compose([
  to_tensor = transforms.PILToTensor()
 
 
-def load_model(ckpt_path = "",):
+def load_model(ckpt_path = BASE_MODEL):
     """
     loads pre-trained and then fine-tuned model,
     removes the last layer and return the fine-tuned model
@@ -82,7 +83,7 @@ def load_model(ckpt_path = "",):
         load_temporal_fix='bilinear',
         )
     model.load_state_dict(state_dict, strict=True)
-    print("=> loaded resume checkpoint '{}' (epoch {})".format(model_path, ckpt['epoch']))
+    print("=> loaded resume checkpoint '{}' (epoch {})".format(BASE_MODEL, ckpt['epoch']))
 
     model = models.VideoClassifierMultiHead(
             model.visual,
@@ -90,9 +91,8 @@ def load_model(ckpt_path = "",):
             num_classes_list = [97, 300, 3806]
         )
 
-    latest = 'clip_openai_timesformer_large.ft_ek100_cls.ep_0090.md5sum_4a2509.pth'
-    print("=> loading latest checkpoint '{}'".format(latest))
-    latest_checkpoint = torch.load(latest, map_location='cpu')
+    print("=> loading latest checkpoint '{}'".format(FINETUNED_MODEL))
+    latest_checkpoint = torch.load(FINETUNED_MODEL, map_location='cpu')
     state_dict = OrderedDict()
 
     for k, v in latest_checkpoint['state_dict'].items():
@@ -105,14 +105,9 @@ def load_model(ckpt_path = "",):
     return model
 
 
-
-
-
 def write_pickle(data, file_name):
     with open(file_name, "wb") as f:
         pickle.dump(data, f)
-
-
 
 
 def main():     
@@ -127,7 +122,7 @@ def main():
             if not os.path.exist(f'{FEATURE_DIR}/{participant}/{video}'):
                 os.makedirs(f'{FEATURE_DIR}/{participant}/{video}')
         
-            file_name = os.getcwd() + f'/{FEATURE_DIR}/{participant}/{video}.h5
+            file_name = os.getcwd() + f'/{FEATURE_DIR}/{participant}/{video}.h5'
 
             with h5py.File(file_name, 'w') as file:
                 for i, clip_batch in enumerate(os.listdir(f'{IMAGE_TENSOR_DIR}/{participant}/{video}')):
