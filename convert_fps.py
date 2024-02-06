@@ -12,10 +12,6 @@ def convert_fps(input_file, output_file):
 
 
 def main():
-
-    if not os.path.exists(f'./videos_converted'):
-        os.makedirs(f'./video_converted/')
-
     for participant in os.listdir('videos'):
         for video in os.listdir(f'videos/{participant}'):
             
