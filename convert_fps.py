@@ -18,7 +18,7 @@ def main():
             if not os.path.exists(f'videos_converted/{participant}'):
                 os.makedirs(f'videos_converted/{participant}')
 
-            convert_fps(video, f'videos_converted/{participant}/{video}')
+            convert_fps(f'videos/{participant}/{video}', f'videos_converted/{participant}/{video}')
 
 
 if __name__ == '__main__':
