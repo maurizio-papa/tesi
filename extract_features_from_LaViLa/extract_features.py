@@ -149,3 +149,17 @@ def extract_features(file):
         end += stripe 
         feature = model(current_batch)[0]
         extracted_features.append(feature)
+
+def main():     
+    if not os.path.exists(FEATURE_DIR):
+        os.makedirs(FEATURE_DIR)
+
+    model = load_model_without_head()
+
+    for participant in os.listdir(TENSOR_DIR):
+        for video in os.listdir(f'{TENSOR_DIR}/{participant}'):
+            with h5py.File(f'{video}.h5', 'w') as file:
+                for video in os.listdir(video):
+                    feature = extract_features(video)
+                    file.create_dataset(f"tensor_{i}", data = feature)
+
