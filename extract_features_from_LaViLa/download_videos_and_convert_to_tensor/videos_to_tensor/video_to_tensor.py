@@ -46,8 +46,16 @@ def convert_jpg_to_tensor(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR, EPIC
 
         if not os.path.exists(participant_tensor_dir):
             os.makedirs(participant_tensor_dir)
+            
+     participant_image_dir = os.path.join(EPIC_KITCHENS_IMAGE_DIR, participant_dir)
 
-        images_to_hdf5(os.path.join(EPIC_KITCHENS_IMAGE_DIR, participant_dir), f'{participant_tensor_dir}\{idx}.h5')
+    for _idx, video in enumerate(os.listdir(participant_image_dir)):
+        video_tensor_dir = os.path.join(participant_image_dir, f'{participant_dir}_{_idx}')
+        
+            if not os.path.exists(video_tensor_dir):
+                os.makedirs(video_tensor_dir)
+                
+        images_to_hdf5(os.path.join(participant_image_dir, video), f'{video_tensor_dir}\{idx}.h5')
         print(f'finished converting in tensor video {idx} of participant {participant_dir}')
 
 
