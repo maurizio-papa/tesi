@@ -134,3 +134,18 @@ def main():
                     feature = model(clip_batch)
                     file.create_dataset(f'tensor_{i}', data= features)
      
+def extract_features(file):
+    extracted_features = []
+    clip_batch = load_images_from_hdf5(file)
+    clip_batch = ([to_tensor((clip_batch[t])) for t in clip_batch])
+    length = len(clip_batch)
+    while (length - 16) > start:
+        start = 0
+        end = 16
+        stripe = 8 
+        current_batch = torch.stack(clip_batch[start : end]).float()
+        current_batch = transform(current_batch).unsqueeze(0)
+        start += stripe 
+        end += stripe 
+        feature = model(current_batch)[0]
+        extracted_features.append(feature)
