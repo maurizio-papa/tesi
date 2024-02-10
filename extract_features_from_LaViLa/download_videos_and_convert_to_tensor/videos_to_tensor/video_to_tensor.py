@@ -50,7 +50,7 @@ def convert_jpg_to_tensor(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR, EPIC
      participant_image_dir = os.path.join(EPIC_KITCHENS_IMAGE_DIR, participant_dir)
 
     for _idx, video in enumerate(os.listdir(participant_image_dir)):
-        video_tensor_dir = os.path.join(participant_image_dir, f'{participant_dir}_{_idx}')
+        video_tensor_dir = os.path.join(participant_tensor_dir, f'{participant_dir}_{_idx}')
         
             if not os.path.exists(video_tensor_dir):
                 os.makedirs(video_tensor_dir)
