@@ -121,7 +121,7 @@ def main():
                 os.makedirs(f'{FEATURE_DIR}/{participant}')
                 
             with h5py.File(f'{FEATURE_DIR}/{participant}/{video}.h5', 'w') as file:
-                for i, clip_batch in enumerate(f'{TENSOR_DIR}/{participant}/{video}'):
+                for i, clip_batch in enumerate(os.listdir(f'{TENSOR_DIR}/{participant}/{video}')):
                     clip_batch = load_images_from_hdf5(f''{TENSOR_DIR}/{participant}/{video}/{clip_batch}')
                     current_batch = [to_tensor(img) for img in clip_batch.values()]
                     current_batch = torch.stack(current_batch).float()
