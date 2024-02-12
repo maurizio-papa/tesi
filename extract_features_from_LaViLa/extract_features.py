@@ -109,6 +109,8 @@ def load_model(BASE_MODEL, FINETUNED_MODEL):
     
 
 def main():     
+    torch.set_grad_enabled(False)
+    
     if not os.path.exists(FEATURE_DIR):
         os.makedirs(FEATURE_DIR)
 
