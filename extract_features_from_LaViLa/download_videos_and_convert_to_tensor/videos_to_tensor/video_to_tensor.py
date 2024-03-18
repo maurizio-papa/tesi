@@ -3,7 +3,7 @@ import subprocess
 import av
 import numpy as np
 import torch
-from videos_to_tensor.split_videos_in_jpg import split_video_to_jpg
+from download_videos_and_convert_to_tensor.videos_to_tensor.split_videos_in_jpg import split_video_to_jpg
 from image_to_tensor.image_to_tensor_h5 import images_to_hdf5
 import numpy as np
 import h5py
