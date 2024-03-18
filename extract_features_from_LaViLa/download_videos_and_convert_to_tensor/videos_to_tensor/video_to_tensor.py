@@ -69,7 +69,7 @@ def convert_videos_to_jpg(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR):
     creates folders for extracting jpg from each participant's video
     and then extract jpgs
     '''
-    for participant_dir in os.listdir(EPIC_KITCHENS_VIDEO_DIR)):
+    for participant_dir in os.listdir(EPIC_KITCHENS_VIDEO_DIR):
         participant_image_dir = os.path.join(EPIC_KITCHENS_IMAGE_DIR, participant_dir)
         print(participant_image_dir)
 
