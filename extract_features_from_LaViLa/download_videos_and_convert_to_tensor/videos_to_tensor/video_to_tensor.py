@@ -81,7 +81,7 @@ def convert_videos_to_jpg(EPIC_KITCHENS_VIDEO_DIR, EPIC_KITCHENS_IMAGE_DIR):
         for video in os.listdir(participant_video_dir):
             video_name = video.split('.')[0]
 
-            video_image_dir = f'{participant_image_dir}/{participant_dir}/{video_name}')
+            video_image_dir = f'{participant_image_dir}/{participant_dir}/{video_name}'
             if not os.path.exists(video_image_dir):
                 os.makedirs(video_image_dir)
 
